@@ -67,6 +67,14 @@ public class MinionParamator : MonoBehaviour
         set { _moveTime = Mathf.Clamp(_moveTime + value, 0, _moveTime + value); }
     }
 
+    [SerializeField]
+    float _interval = 0f;
+    public float Interval
+    {
+        get { return _interval; }
+        set { _interval = Mathf.Clamp(_interval + value, 0, _interval + value); }
+    }
+
     void Death()
     {
         Destroy(this.gameObject);
