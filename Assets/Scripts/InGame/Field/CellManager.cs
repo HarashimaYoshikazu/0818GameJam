@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class CellManager : MonoBehaviour
 {
     Cell[,] _cellArray = null;
+    public Cell[,] CellArray => _cellArray;
     Cell _cellPrefab;
 
     [SerializeField]
@@ -19,7 +20,10 @@ public class CellManager : MonoBehaviour
         CreateField();
     }
 
-    private void CreateField()
+    /// <summary>
+    /// ‚Ü‚¾¶¬‚³‚ê‚Ä‚¢‚È‚¢ê‡‚Íƒ}ƒbƒv‚ğ¶¬‚·‚é
+    /// </summary>
+    public void CreateField()
     {
         if (!_cellPrefab)
         {
