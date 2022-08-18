@@ -23,13 +23,19 @@ public class MinionMove : MonoBehaviour
         _isStepArray = new bool[_columCount, _rowCount];
     }
 
-    private void Start()
+    float _timer = 0f;
+    public void OnUpdate()
     {
-        CheckAround(_minionParamator.StartPos.Value.x, _minionParamator.StartPos.Value.y);
+        _timer += Time.deltaTime;
+        if (_timer >= _minionParamator.MoveTime)
+        {
+            _timer = 0f;
+            CheckAround(_minionParamator.CurrentPos.Value.x, _minionParamator.CurrentPos.Value.y);         
+        }
     }
 
     void CheckAround(int colom, int row)
-    {
+    {    
         bool isLeft = row == 0;
         bool isRight = row == _rowCount - 1;
         bool isTop = colom == 0;
@@ -41,6 +47,7 @@ public class MinionMove : MonoBehaviour
             {
                 _isStepArray[colom, row - 1] = true;
                 Move(colom, row - 1);
+                _cellArray[colom, row].MinionOnCell = null;
                 return;
             }
         }
@@ -50,6 +57,7 @@ public class MinionMove : MonoBehaviour
             {
                 _isStepArray[colom, row + 1] = true;
                 Move(colom, row + 1);
+                _cellArray[colom, row].MinionOnCell = null;
                 return;
             }
         }
@@ -59,6 +67,8 @@ public class MinionMove : MonoBehaviour
             {
                 _isStepArray[colom - 1, row] = true;
                 Move(colom - 1, row);
+                _cellArray[colom, row].MinionOnCell = null;
+
                 return;
             }
         }
@@ -68,6 +78,8 @@ public class MinionMove : MonoBehaviour
             {
                 _isStepArray[colom + 1, row] = true;
                 Move(colom + 1, row);
+                _cellArray[colom, row].MinionOnCell = null;
+
                 return;
             }
         }
@@ -75,11 +87,8 @@ public class MinionMove : MonoBehaviour
 
     void Move(int colom, int row)
     {
-        DOVirtual.DelayedCall(_minionParamator.MoveTime, () =>
-        {
-            this.transform.SetParent(_cellArray[colom,row].transform);
-            _minionParamator.CurrentPos = new Vector2Int(colom, row);
-            CheckAround(colom, row);
-        });
+        this.transform.SetParent(_cellArray[colom, row].transform);
+        _minionParamator.CurrentPos = new Vector2Int(colom, row);
+        _cellArray[colom, row].MinionOnCell = _minionParamator;
     }
 }

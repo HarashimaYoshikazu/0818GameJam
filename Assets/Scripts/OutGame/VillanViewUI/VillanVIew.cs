@@ -9,10 +9,12 @@ public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,ID
 {
     [SerializeField]
     int _id = 1;
+    public int ID => _id;
 
     int _initAtk = 0;
     int _initHP = 0;
     float _initMoveTime = 0f;
+    float _interval = 0f;
 
     float _coolTime = 0f;
     int _createValue = 0;
@@ -25,9 +27,29 @@ public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,ID
     /// <summary>キャッシュ用の変数</summary>
     GameObject _currentPointerObject = null;
 
+    List<GameObject> _villanList = new List<GameObject>();
+    public void RemoveVillan(GameObject minion)
+    {
+        _villanList.Remove(minion);
+    }
     private void Awake()
     {
         InitData();
+    }
+
+    public void OnUpdate()
+    {
+        foreach (var mini in _villanList)
+        {
+            if (mini.TryGetComponent<MinionMove>(out MinionMove move))
+            {
+                move.OnUpdate();
+            }
+            if (mini.TryGetComponent<MinionAttack>(out MinionAttack attack))
+            {
+                attack.OnUpdate();
+            }
+        }
     }
 
     void InitData()
@@ -41,6 +63,7 @@ public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,ID
         _createValue = data.InitCreateValue;
         _levelUpValue = data.InitLevelUpValue;
         _image.sprite = data.GetSprite;
+        _interval = data.Interval;
         _prefab = data.Prefab;
     }
 
@@ -70,6 +93,10 @@ public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,ID
                 minion.Atk = _initAtk;
                 minion.MoveTime = _initMoveTime;
                 minion.StartPos = cell.CellPos;
+                minion.Interval = _interval;
+                minion.MinionType = MinionType.Villan;
+                minion.ID = _id;
+                _villanList.Add(minion.gameObject);
             }
         }
         _image.raycastTarget = true;

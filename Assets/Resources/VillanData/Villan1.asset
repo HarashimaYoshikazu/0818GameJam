@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minionType: 1
   _initAtk: 2
+  _interval: 2
   _initHP: 5
   _prefab: {fileID: 4833597805881504901, guid: f092b390f0318034fbbeaea3c29c9326, type: 3}
   _initMoveTime: 5

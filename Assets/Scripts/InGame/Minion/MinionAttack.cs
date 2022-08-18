@@ -21,8 +21,9 @@ public class MinionAttack : MonoBehaviour
         _cellArray = GameManager.Instance.CellManagerInstans.CellArray;
     }
 
-    private void Update()
+    public void OnUpdate()
     {
+        _timer += Time.deltaTime;
         if (_timer > _minionParamator.Interval)
         {
             CheckAround(_minionParamator.CurrentPos.Value.x, _minionParamator.CurrentPos.Value.y);
@@ -30,12 +31,25 @@ public class MinionAttack : MonoBehaviour
     }
     public void Attack(MinionParamator minion)
     {
-        minion.HP -= _minionParamator.Atk;
+        minion.Damage(_minionParamator.Atk);
+        Debug.Log($"{this.gameObject.name}ÇÃçUåÇ{_minionParamator.Atk}");
         _timer = 0f;
+        Debug.Log($"{this.gameObject.name}ÇÃçUåÇ.{minion.name}Ç…ñΩíÜÅBécÇËHP{minion.HP}");
     }
 
     void CheckAround(int colom, int row)
     {
+        CellTypes cellTypes = CellTypes.AlreadyHero;
+        switch (_minionParamator.MinionType)
+        {
+            case MinionType.Hero:
+                cellTypes = CellTypes.Load;
+                break;
+            case MinionType.Villan:
+                cellTypes = CellTypes.AlreadyHero;
+                break;
+        }
+
         bool isLeft = row == 0;
         bool isRight = row == _rowCount - 1;
         bool isTop = colom == 0;
@@ -43,34 +57,52 @@ public class MinionAttack : MonoBehaviour
 
         if (!isLeft)//ç∂
         {
-            if (_cellArray[colom, row - 1].CurrentCellType == CellTypes.AlreadyHero)
+            if (_cellArray[colom, row - 1].CurrentCellType == cellTypes)
             {
-                Attack(_cellArray[colom, row - 1].HeroOnCell);
-                return;
+                if (_cellArray[colom, row - 1].MinionOnCell)
+                {
+                    Attack(_cellArray[colom, row - 1].MinionOnCell);
+                    return;
+                }
+
+
             }
         }
         if (!isRight)
         {
-            if (_cellArray[colom, row + 1].CurrentCellType == CellTypes.AlreadyHero)
+            if (_cellArray[colom, row + 1].CurrentCellType == cellTypes)
             {
-                Attack(_cellArray[colom, row + 1].HeroOnCell);
-                return;
+                if (_cellArray[colom, row + 1].MinionOnCell)
+                {
+                    Attack(_cellArray[colom, row + 1].MinionOnCell);
+                    return;
+                }
+
+
             }
         }
         if (!isTop)
         {
-            if (_cellArray[colom - 1, row].CurrentCellType == CellTypes.AlreadyHero)
+            if (_cellArray[colom - 1, row].CurrentCellType == cellTypes)
             {
-                Attack(_cellArray[colom - 1, row].HeroOnCell);
-                return;
+                if (_cellArray[colom - 1, row].MinionOnCell)
+                {
+                    Attack(_cellArray[colom - 1, row].MinionOnCell);
+                    return;
+                }
+
             }
         }
         if (!isBottom)
         {
-            if (_cellArray[colom + 1, row].CurrentCellType == CellTypes.AlreadyHero)
+            if (_cellArray[colom + 1, row].CurrentCellType == cellTypes)
             {
-                Attack(_cellArray[colom + 1, row].HeroOnCell);
-                return;
+                if (_cellArray[colom + 1, row].MinionOnCell)
+                {
+                    Attack(_cellArray[colom + 1, row].MinionOnCell);
+                    return;
+                }
+
             }
         }
     }
