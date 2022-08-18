@@ -8,25 +8,51 @@ public class GameCycle : MonoBehaviour
     //ƒQ[ƒ€‚Ìó‘ÔŠÇ—
     enum GameStateEvent
     {
-        GoBattle,
-        GoHome,
+        Start,
+        Pause,
+        End
     }
 
     StateMachine<GameStateEvent> _gameState = new StateMachine<GameStateEvent>();
     private void Awake()
     {
         //‘JˆÚ‚Ìİ’è
-        //_gameState.AddTransition<TitleScene, HomeScene>(GameStateEvent.GoHome);
-
-        _gameState.StartSetUp<Start>();
+        _gameState.AddTransition<StartState, IngameState>(GameStateEvent.Start);
+        _gameState.AddTransition<IngameState,EndState >(GameStateEvent.Start);
+        _gameState.StartSetUp<StartState>();
     }
 
-    class Start : StateMachine<GameStateEvent>.State
+    class StartState : StateMachine<GameStateEvent>.State
+    {
+        public override void OnEnter(StateMachine<GameStateEvent>.State prevState)
+        {
+            
+        }
+
+        protected override void OnUpdate()
+        {
+            
+        }
+
+        protected override void OnExit(StateMachine<GameStateEvent>.State nextState)
+        {
+            
+        }
+    }
+    class IngameState : StateMachine<GameStateEvent>.State
     {
 
     }
-    class Ingame : StateMachine<GameStateEvent>.State
+
+    class EndState : StateMachine<GameStateEvent>.State
     {
 
     }
+
+    class PauseState : StateMachine<GameStateEvent>.State
+    {
+
+    }
+
+
 }

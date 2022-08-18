@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager:Singleton<GameManager>
+public class GameManager : Singleton<GameManager>
 {
     CellManager _cellManager = null;
     public CellManager CellManagerInstans
@@ -15,10 +15,27 @@ public class GameManager:Singleton<GameManager>
                 if (!_cellManager)
                 {
                     CellManager go = Resources.Load<CellManager>("UIPrefabs/CellCanvas");
-                    _cellManager= GameObject.Instantiate(go);
+                    _cellManager = GameObject.Instantiate(go);
                 }
             }
             return _cellManager;
+        }
+    }
+
+    GameCycle _gameCycle = null;
+    public GameCycle GameCycleInstans
+    {
+        get
+        {
+            if (!_gameCycle)
+            {
+                _gameCycle = GameObject.FindObjectOfType<GameCycle>();
+                if (!_gameCycle)
+                {
+                    _gameCycle = new GameObject("GameCycle").AddComponent<GameCycle>();
+                }
+            }
+            return _gameCycle;
         }
     }
 }
