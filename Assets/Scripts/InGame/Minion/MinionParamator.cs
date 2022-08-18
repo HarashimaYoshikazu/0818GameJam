@@ -1,12 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// パラメータを格納するクラス
 /// </summary>
 public class MinionParamator : MonoBehaviour
 {
+    int _id = 0;
+    public int ID
+    {
+        get { return _id; }
+        set { _id = value; }
+    }
+
+    [SerializeField]
+    MinionType _minionType = MinionType.None;
+    public MinionType MinionType
+    {
+        get { return _minionType; }
+        set { _minionType = value; }
+    }
+
     Vector2Int? _startPos = null;
     public Vector2Int? StartPos
     {
@@ -41,7 +57,7 @@ public class MinionParamator : MonoBehaviour
     public int Atk
     {
         get { return _atk; }
-        set { _atk = Mathf.Clamp(_atk + value, 0, _atk + value); }
+        set { _atk = value; }
     }
 
     [SerializeField]
@@ -49,13 +65,14 @@ public class MinionParamator : MonoBehaviour
     public int HP
     {
         get { return _hP; }
-        set
+        set { _hP = value; }
+    }
+    public void Damage(int value)
+    {
+        _hP -= value;
+        if (_hP <= 0)
         {
-            _hP = Mathf.Clamp(_hP + value, 0, _hP + value);
-            if (_hP <= 0)
-            {
-                Death();
-            }
+            Death();
         }
     }
 
@@ -77,6 +94,18 @@ public class MinionParamator : MonoBehaviour
 
     void Death()
     {
+        Debug.Log($"{this.gameObject.name}死んだ");
+        if (_minionType == MinionType.Hero)
+        {
+            GameManager.Instance.CellManagerInstans.CellArray[CurrentPos.Value.x, CurrentPos.Value.y].CurrentCellType = CellTypes.HeroArea;
+            GameManager.Instance.HeroGeneretorInstance.AddSpawnCell(GameManager.Instance.CellManagerInstans.CellArray[CurrentPos.Value.x, CurrentPos.Value.y]);
+            GameManager.Instance.HeroGeneretorInstance.RemoveHero(this.gameObject);
+        }
+        else if (_minionType == MinionType.Villan)
+        {
+            var list = UIManager.Instance.VillanViews.Where(x => x.ID == _id).Single();
+            list.RemoveVillan(this.gameObject);
+        }
         Destroy(this.gameObject);
     }
 }

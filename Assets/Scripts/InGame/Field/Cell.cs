@@ -9,15 +9,22 @@ public class Cell : MonoBehaviour
 {
     [SerializeField]
     CellTypes _cellType = CellTypes.Load;
-    public CellTypes CurrentCellType => _cellType;
+    public CellTypes CurrentCellType
+    {
+        get { return _cellType; }
+        set { _cellType = value; }
+    }
 
     Image _image = null;
 
     MinionParamator _heroOnCell = null;
-    public MinionParamator HeroOnCell
+    public MinionParamator MinionOnCell
     {
-        get => _heroOnCell;
-        set => _heroOnCell = value;
+        get
+        {
+            return _heroOnCell;
+        }
+        set { _heroOnCell = value; }
     }
 
     Vector2Int? _cellPos = null;
