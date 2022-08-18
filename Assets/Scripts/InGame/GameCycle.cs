@@ -26,7 +26,7 @@ public class GameCycle : MonoBehaviour
     {
         public override void OnEnter(StateMachine<GameStateEvent>.State prevState)
         {
-            
+            UIManager.Instance.CreateVillanViewPanel();
         }
 
         protected override void OnUpdate()
