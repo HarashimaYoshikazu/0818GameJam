@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 [RequireComponent(typeof(MinionParamator))]
 public class MinionMove : MonoBehaviour
@@ -10,7 +11,7 @@ public class MinionMove : MonoBehaviour
     int _rowCount = 0;
 
     Cell[,] _cellArray = null;
-    bool[,] _isStepArray  = null;
+    bool[,] _isStepArray = null;
     private void Awake()
     {
         _minionParamator = GetComponent<MinionParamator>();
@@ -19,7 +20,7 @@ public class MinionMove : MonoBehaviour
 
         //”z—ñ‰Šú‰»
         _cellArray = GameManager.Instance.CellManagerInstans.CellArray;
-        _isStepArray = new bool[_columCount, _rowCount];        
+        _isStepArray = new bool[_columCount, _rowCount];
     }
 
     private void Start()
@@ -27,34 +28,34 @@ public class MinionMove : MonoBehaviour
         CheckAround(_minionParamator.StartPos.Value.x, _minionParamator.StartPos.Value.y);
     }
 
-    void CheckAround(int colom,int row)
+    void CheckAround(int colom, int row)
     {
         bool isLeft = row == 0;
-        bool isRight = row == _rowCount-1;      
+        bool isRight = row == _rowCount - 1;
         bool isTop = colom == 0;
-        bool isBottom  = colom == _columCount-1;
+        bool isBottom = colom == _columCount - 1;
 
         if (!isLeft)//¶
         {
-            if ((_cellArray[colom , row - 1].CurrentCellType ==CellTypes.Load|| _cellArray[colom , row - 1].CurrentCellType == CellTypes.HeroArea) && !_isStepArray[colom , row - 1])
+            if ((_cellArray[colom, row - 1].CurrentCellType == CellTypes.Load || _cellArray[colom, row - 1].CurrentCellType == CellTypes.HeroArea) && !_isStepArray[colom, row - 1])
             {
-                _isStepArray[colom , row - 1] = true;
+                _isStepArray[colom, row - 1] = true;
                 Move(colom, row - 1);
                 return;
-            }            
+            }
         }
         if (!isRight)
         {
-            if ((_cellArray[colom , row + 1].CurrentCellType == CellTypes.Load || _cellArray[colom , row + 1].CurrentCellType == CellTypes.HeroArea) && !_isStepArray[colom , row + 1])
+            if ((_cellArray[colom, row + 1].CurrentCellType == CellTypes.Load || _cellArray[colom, row + 1].CurrentCellType == CellTypes.HeroArea) && !_isStepArray[colom, row + 1])
             {
-                _isStepArray[colom , row + 1] = true;
+                _isStepArray[colom, row + 1] = true;
                 Move(colom, row + 1);
                 return;
             }
         }
         if (!isTop)
         {
-            if ((_cellArray[colom - 1, row].CurrentCellType == CellTypes.Load || _cellArray[colom - 1, row].CurrentCellType == CellTypes.HeroArea) && !_isStepArray[colom - 1, row ])
+            if ((_cellArray[colom - 1, row].CurrentCellType == CellTypes.Load || _cellArray[colom - 1, row].CurrentCellType == CellTypes.HeroArea) && !_isStepArray[colom - 1, row])
             {
                 _isStepArray[colom - 1, row] = true;
                 Move(colom - 1, row);
@@ -63,9 +64,9 @@ public class MinionMove : MonoBehaviour
         }
         if (!isBottom)
         {
-            if ((_cellArray[colom + 1, row ].CurrentCellType == CellTypes.Load || _cellArray[colom + 1, row ].CurrentCellType == CellTypes.HeroArea) && !_isStepArray[colom + 1, row ])
+            if ((_cellArray[colom + 1, row].CurrentCellType == CellTypes.Load || _cellArray[colom + 1, row].CurrentCellType == CellTypes.HeroArea) && !_isStepArray[colom + 1, row])
             {
-                _isStepArray[colom + 1, row ] = true;
+                _isStepArray[colom + 1, row] = true;
                 Move(colom + 1, row);
                 return;
             }
@@ -74,6 +75,11 @@ public class MinionMove : MonoBehaviour
 
     void Move(int colom, int row)
     {
-        this.transform.SetParent(_cellArray[row,colom].transform);
+        DOVirtual.DelayedCall(_minionParamator.MoveTime, () =>
+        {
+            this.transform.SetParent(_cellArray[colom,row].transform);
+            _minionParamator.CurrentPos = new Vector2Int(colom, row);
+            CheckAround(colom, row);
+        });
     }
 }
