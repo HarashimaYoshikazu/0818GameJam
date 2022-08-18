@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// FIXME MonoBehavior‚¢‚ç‚È‚¢‚©‚à
+/// </summary>
 [RequireComponent(typeof(GridLayoutGroup))]
 public class CellManager : MonoBehaviour
 {
