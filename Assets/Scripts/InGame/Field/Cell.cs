@@ -13,12 +13,19 @@ public class Cell : MonoBehaviour
 
     Image _image = null;
 
+    MinionParamator _heroOnCell = null;
+    public MinionParamator HeroOnCell
+    {
+        get => _heroOnCell;
+        set => _heroOnCell = value;
+    }
+
     Vector2Int? _cellPos = null;
     public Vector2Int? CellPos
     {
-        get 
+        get
         {
-            if (_cellPos ==null)
+            if (_cellPos == null)
             {
                 var line = this.gameObject.name.Split(' ');
                 _cellPos = new Vector2Int(int.Parse(line[0]), int.Parse(line[1]));
@@ -33,7 +40,7 @@ public class Cell : MonoBehaviour
     {
         if (!_image)
         {
-            _image = GetComponent<Image>(); 
+            _image = GetComponent<Image>();
         }
         switch (_cellType)
         {
