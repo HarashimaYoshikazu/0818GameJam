@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Image))]
-public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,IDragHandler
+public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,IDragHandler,IPointerDownHandler
 {
     [SerializeField]
     int _id = 1;
@@ -18,9 +18,10 @@ public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,ID
     int _createValue = 0;
     int _levelUpValue = 0;
 
+    GameObject _prefab = null;
+
     Image _image;
 
-    Transform _lastParent = null;
     /// <summary>キャッシュ用の変数</summary>
     GameObject _currentPointerObject = null;
 
@@ -40,7 +41,7 @@ public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,ID
         _createValue = data.InitCreateValue;
         _levelUpValue = data.InitLevelUpValue;
         _image.sprite = data.GetSprite;
-        _lastParent = this.transform.parent;
+        _prefab = data.Prefab;
     }
 
 
@@ -59,8 +60,21 @@ public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,ID
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        Debug.Log(_currentPointerObject);
+        if (_currentPointerObject.TryGetComponent<Cell>(out Cell cell))
+        {
+            if (cell.CurrentCellType ==CellType.SpawonPoint)
+            {
+                //生成
+                Instantiate(_prefab,_currentPointerObject.transform);
+            }
+        }
         _image.raycastTarget = true;
-        this.transform.SetParent(UIManager.Instance.UIVillanSelectPanel.transform);
+        this.transform.SetParent(UIManager.Instance.UIVillanSelectPanel.transform);              
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
         
     }
 }

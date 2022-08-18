@@ -16,6 +16,10 @@ public class MinionData : ScriptableObject
     [SerializeField, Tooltip("ミニオンの初期化HP")]
     int _initHP = 0;
     public int InitHP => _initHP;
+
+    [SerializeField, Tooltip("ミニオンのプレハブ")]
+    GameObject _prefab = null;
+    public GameObject Prefab => _prefab;
 }
 
 public enum MinionType
