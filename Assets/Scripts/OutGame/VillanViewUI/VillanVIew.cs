@@ -10,15 +10,15 @@ public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,ID
     [SerializeField]
     int _id = 1;
 
-    int _atk = 0;
-    int _hP = 0;
-    float _moveTime = 0f;
+    int _initAtk = 0;
+    int _initHP = 0;
+    float _initMoveTime = 0f;
 
     float _coolTime = 0f;
     int _createValue = 0;
     int _levelUpValue = 0;
 
-    GameObject _prefab = null;
+    MinionParamator _prefab = null;
 
     Image _image;
 
@@ -34,9 +34,9 @@ public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,ID
     {
         _image = GetComponent<Image>();
         var data = Resources.Load<VillanData>($"VillanData/Villan{_id}");
-        _atk = data.InitAtk;
-        _hP = data.InitHP;
-        _moveTime = data.InitMoveTime;
+        _initAtk = data.InitAtk;
+        _initHP = data.InitHP;
+        _initMoveTime = data.InitMoveTime;
         _coolTime = data.InitCoolTime;
         _createValue = data.InitCreateValue;
         _levelUpValue = data.InitLevelUpValue;
@@ -60,13 +60,16 @@ public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,ID
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log(_currentPointerObject);
         if (_currentPointerObject.TryGetComponent<Cell>(out Cell cell))
         {
-            if (cell.CurrentCellType ==CellType.SpawonPoint)
+            if (cell.CurrentCellType ==CellTypes.SpawonPoint)
             {
                 //ê∂ê¨
-                Instantiate(_prefab,_currentPointerObject.transform);
+                var minion = Instantiate(_prefab,_currentPointerObject.transform);
+                minion.HP = _initHP;
+                minion.Atk = _initAtk;
+                minion.MoveTime = _initMoveTime;
+                minion.StartPos = cell.CellPos;
             }
         }
         _image.raycastTarget = true;

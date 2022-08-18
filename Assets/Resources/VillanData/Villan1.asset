@@ -15,7 +15,7 @@ MonoBehaviour:
   _minionType: 1
   _initAtk: 2
   _initHP: 5
-  _prefab: {fileID: 7209752638544787185, guid: f092b390f0318034fbbeaea3c29c9326, type: 3}
+  _prefab: {fileID: 4833597805881504901, guid: f092b390f0318034fbbeaea3c29c9326, type: 3}
   _initMoveTime: 5
   _initCoolTime: 2
   _initCreateValue: 3

@@ -18,8 +18,8 @@ public class MinionData : ScriptableObject
     public int InitHP => _initHP;
 
     [SerializeField, Tooltip("ミニオンのプレハブ")]
-    GameObject _prefab = null;
-    public GameObject Prefab => _prefab;
+    MinionParamator _prefab = null;
+    public MinionParamator Prefab => _prefab;
 }
 
 public enum MinionType
