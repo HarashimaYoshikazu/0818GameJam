@@ -55,4 +55,11 @@ public class GameManager : Singleton<GameManager>
             return _heroGeneretor;
         }
     }
+
+    int _money = 0;
+    public int Money => _money;
+    public void ChangeMoney(int value)
+    {
+        _money += value;
+    }
 }
