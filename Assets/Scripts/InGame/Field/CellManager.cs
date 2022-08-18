@@ -8,7 +8,6 @@ public class CellManager : MonoBehaviour
 {
     Cell[,] _cellArray = null;
     Cell _cellPrefab;
-    GridLayoutGroup _grid;
 
     [SerializeField]
     int _colm = 5;
@@ -17,19 +16,45 @@ public class CellManager : MonoBehaviour
 
     private void Awake()
     {
-        _grid = GetComponent<GridLayoutGroup>();
-        _cellPrefab = Resources.Load<Cell>("Cell");
+        CreateField();
+    }
+
+    private void CreateField()
+    {
+        if (!_cellPrefab)
+        {
+            _cellPrefab = Resources.Load<Cell>("Cell");
+        }
+
         if (_cellArray == null)
         {
             _cellArray = new Cell[_colm, _row];
-            for (int i = 0;i< _colm;i++)
+            for (int i = 0; i < _colm; i++)
             {
-                for (int k = 0;k<_row;k++)
+                for (int k = 0; k < _row; k++)
                 {
-                    var cell = Instantiate(_cellPrefab,this.transform);
+                    var cel = GameObject.Find($"{i} {k}");
+                    if (cel)
+                    {
+                        _cellArray[i, k] = cel.GetComponent<Cell>();
+                    }               
+                }
+            }
+        }
+
+        if (_cellArray == null|| !_cellArray[0,0])
+        {
+            _cellArray = new Cell[_colm, _row];
+            for (int i = 0; i < _colm; i++)
+            {
+                for (int k = 0; k < _row; k++)
+                {
+                    var cell = Instantiate(_cellPrefab, this.transform);
+                    cell.name = $"{i} {k}";
                     _cellArray[i, k] = cell;
                 }
             }
         }
     }
+    
 }
