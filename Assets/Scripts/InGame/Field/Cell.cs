@@ -8,6 +8,7 @@ public class Cell : MonoBehaviour
 {
     [SerializeField]
     CellType _cellType = CellType.Load;
+    public CellType CurrentCellType => _cellType;
 
     Image _image = null;
 
