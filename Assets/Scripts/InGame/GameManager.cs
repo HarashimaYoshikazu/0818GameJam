@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager:Singleton<GameManager>
 {
-    // Start is called before the first frame update
-    void Start()
+    CellManager _cellManager = null;
+    public CellManager CellManagerInstans
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        get
+        {
+            if (!_cellManager)
+            {
+                _cellManager = GameObject.FindObjectOfType<CellManager>();
+                if (!_cellManager)
+                {
+                    CellManager go = Resources.Load<CellManager>("UIPrefabs/CellCanvas");
+                    _cellManager= GameObject.Instantiate(go);
+                }
+            }
+            return _cellManager;
+        }
     }
 }
