@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +8,9 @@ public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,ID
 {
     [SerializeField]
     int _id = 1;
+    [SerializeField]
+    Button _button;
+    GameObject _panelOnButton = null;
     public int ID => _id;
 
     int _initAtk = 0;
@@ -19,6 +21,12 @@ public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,ID
     float _coolTime = 0f;
     int _createValue = 0;
     int _levelUpValue = 0;
+
+    const int _atkLevelUpValue = 3;
+    const int _hpLevelUpValue = 3;
+    const float _moveTimeLevelUpTime = 0.3f;
+    const float _coolTimeLevelUpTime = 0.2f;
+    const float _intervalLevelUpTime = 0.2f;
 
     MinionParamator _prefab = null;
 
@@ -37,6 +45,7 @@ public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,ID
         InitData();
     }
 
+    float _timer = 0f;
     public void OnUpdate()
     {
         foreach (var mini in _villanList)
@@ -49,6 +58,24 @@ public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,ID
             {
                 attack.OnUpdate();
             }
+        }
+        _timer += Time.deltaTime;
+        if (_coolTime > _timer)
+        {
+            _image.color = Color.gray;
+        }
+        else
+        {
+            _image.color = Color.white;
+        }
+
+        if (_levelUpValue>GameManager.Instance.Money)
+        {
+            _panelOnButton.SetActive(true);
+        }
+        else
+        {
+            _panelOnButton.SetActive(false);
         }
     }
 
@@ -65,41 +92,75 @@ public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,ID
         _image.sprite = data.GetSprite;
         _interval = data.Interval;
         _prefab = data.Prefab;
+
+        _button.onClick.AddListener(() => { LevelUp(); });
+        _panelOnButton = Instantiate(Resources.Load<GameObject>("UIPrefabs/PanelOnButton"),_button.transform);
     }
 
+    public void LevelUp()
+    {
+        if (_levelUpValue<GameManager.Instance.Money)
+        {
+            GameManager.Instance.ChangeMoney(-(_levelUpValue));
+            _initAtk += _atkLevelUpValue;
+            _initHP += _hpLevelUpValue;
+            _initMoveTime -= _moveTimeLevelUpTime;
+            _interval -= _intervalLevelUpTime;
+            _coolTime -= _coolTimeLevelUpTime;
+            _createValue++;
+        }
+    }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (_coolTime>_timer)
+        {
+            return;
+        }
         //ÉJÅ[ÉhÇÃâ∫ÇÃObjectÇéÊìæÇµÇΩÇ¢Ç©ÇÁraycastTargetÇñ≥å¯Ç…Ç∑ÇÈ
         _image.raycastTarget = false;
+        _button.gameObject.SetActive(false);
         this.transform.SetParent(this.transform.parent.parent);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (_coolTime > _timer)
+        {
+            return;
+        }
         _currentPointerObject = eventData.pointerCurrentRaycast.gameObject;
         this.transform.position = eventData.position;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (_currentPointerObject.TryGetComponent<Cell>(out Cell cell))
+        if (_coolTime > _timer)
+        {
+            return;
+        }
+        if (_currentPointerObject&&_currentPointerObject.TryGetComponent<Cell>(out Cell cell))
         {
             if (cell.CurrentCellType ==CellTypes.SpawonPoint)
             {
-                //ê∂ê¨
-                var minion = Instantiate(_prefab,_currentPointerObject.transform);
-                minion.HP = _initHP;
-                minion.Atk = _initAtk;
-                minion.MoveTime = _initMoveTime;
-                minion.StartPos = cell.CellPos;
-                minion.Interval = _interval;
-                minion.MinionType = MinionType.Villan;
-                minion.ID = _id;
-                _villanList.Add(minion.gameObject);
+                for (int i = 0;i<_createValue;i++)
+                {
+                    //ê∂ê¨
+                    var minion = Instantiate(_prefab, _currentPointerObject.transform);
+                    minion.HP = _initHP;
+                    minion.Atk = _initAtk;
+                    minion.MoveTime = _initMoveTime;
+                    minion.StartPos = cell.CellPos;
+                    minion.Interval = _interval;
+                    minion.MinionType = MinionType.Villan;
+                    minion.ID = _id;
+                    _villanList.Add(minion.gameObject);
+                }
             }
         }
         _image.raycastTarget = true;
+        _button.gameObject.SetActive(true);
+        _timer = 0f;
         this.transform.SetParent(UIManager.Instance.UIVillanSelectPanel.transform);              
     }
 

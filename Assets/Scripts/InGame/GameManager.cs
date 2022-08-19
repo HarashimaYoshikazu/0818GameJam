@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -54,5 +55,13 @@ public class GameManager : Singleton<GameManager>
             }
             return _heroGeneretor;
         }
+    }
+
+    int _money = 100;
+    public int Money => _money;
+    public void ChangeMoney(int value)
+    {
+        _money += value;
+        UIManager.Instance.ChangeMoneyView(_money);
     }
 }
