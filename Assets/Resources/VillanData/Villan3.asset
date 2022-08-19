@@ -18,7 +18,7 @@ MonoBehaviour:
   _initHP: 2
   _prefab: {fileID: 4833597805881504901, guid: 5273b4ae741431c448928aead99e7297, type: 3}
   _initMoveTime: 2
-  _initCoolTime: 2
+  _initCoolTime: 5
   _initCreateValue: 3
   _initLevelUpValue: 5
   _sprite: {fileID: 21300000, guid: 97b81c55936596845a235f637f198912, type: 3}

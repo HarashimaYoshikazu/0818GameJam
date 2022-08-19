@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager:Singleton<UIManager>
 {
@@ -18,6 +19,7 @@ public class UIManager:Singleton<UIManager>
     /// </summary>
     public void CreateUIObject()
     {
+        _villanVIews.Clear();
         var list = Resources.LoadAll<VillanVIew>("Villans");
         var canvas = GameObject.Instantiate(Resources.Load<GameObject>("UIPrefabs/UIVillanSelectCanvas"));
         _uIVillanSelectPanel = GameObject.Instantiate(Resources.Load<GameObject>("UIPrefabs/UIVillanSelectPanel"), canvas.transform);      
@@ -41,6 +43,13 @@ public class UIManager:Singleton<UIManager>
         {
             _timeText = GameObject.Instantiate(Resources.Load<Text>("UIPrefabs/TimeText"), _canvas.transform);
         }
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        
     }
 
     public void OnUpdate()
@@ -82,4 +91,6 @@ public class UIManager:Singleton<UIManager>
     {
         _timeText.text = num.ToString();
     }
+
+    
 }
