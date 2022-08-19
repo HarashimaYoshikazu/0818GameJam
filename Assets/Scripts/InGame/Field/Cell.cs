@@ -43,28 +43,40 @@ public class Cell : MonoBehaviour
         set { _cellPos = value; }
     }
 
+    Sprite _bush = null;
+    Sprite _dart = null;
+    Sprite _spawnPoint = null;
+    Sprite _wall = null;
     private void OnValidate()
     {
         if (!_image)
         {
             _image = GetComponent<Image>();
         }
+        if (!_bush)
+        {
+            _bush = Resources.Load<Sprite>("Cells/bush");
+            _dart = Resources.Load<Sprite>("Cells/dart");
+            _spawnPoint = Resources.Load<Sprite>("Cells/Spawn1");
+            _wall = Resources.Load<Sprite>("Cells/wall");
+        }
+
         switch (_cellType)
         {
             case CellTypes.Load:
-                _image.color = Color.white;
+                _image.sprite = _bush;
                 break;
             case CellTypes.SpawonPoint:
-                _image.color = Color.red;
+                _image.sprite = _spawnPoint;
                 break;
             case CellTypes.Block:
-                _image.color = Color.black;
+                _image.sprite = _wall;
                 break;
             case CellTypes.HeroArea:
-                _image.color = Color.gray;
+                _image.sprite = _dart;
                 break;
             case CellTypes.AlreadyHero:
-                _image.color = Color.green;
+                //_image.sprite
                 break;
         }
 
