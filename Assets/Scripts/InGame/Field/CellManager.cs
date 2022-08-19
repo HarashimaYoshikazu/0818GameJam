@@ -3,23 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// FIXME MonoBehavior‚¢‚ç‚È‚¢‚©‚à
+/// </summary>
 [RequireComponent(typeof(GridLayoutGroup))]
 public class CellManager : MonoBehaviour
 {
     Cell[,] _cellArray = null;
+    public Cell[,] CellArray => _cellArray;
     Cell _cellPrefab;
 
     [SerializeField]
     int _colm = 5;
+    public int Colm => _colm;
     [SerializeField]
     int _row = 5;
+    public int Row => _row;
 
     private void Awake()
     {
         CreateField();
     }
 
-    private void CreateField()
+    /// <summary>
+    /// ‚Ü‚¾¶¬‚³‚ê‚Ä‚¢‚È‚¢ê‡‚Íƒ}ƒbƒv‚ğ¶¬‚·‚é
+    /// </summary>
+    public void CreateField()
     {
         if (!_cellPrefab)
         {
@@ -50,6 +59,7 @@ public class CellManager : MonoBehaviour
                 for (int k = 0; k < _row; k++)
                 {
                     var cell = Instantiate(_cellPrefab, this.transform);
+                    cell.CellPos = new Vector2Int(i,k);
                     cell.name = $"{i} {k}";
                     _cellArray[i, k] = cell;
                 }

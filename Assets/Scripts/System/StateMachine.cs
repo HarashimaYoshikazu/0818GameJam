@@ -29,7 +29,7 @@ public class StateMachine<Event> where Event : System.Enum
             OnUpdate();
         }
 
-        protected virtual void OnUpdate() { }
+        public virtual void OnUpdate() { }
 
         public void Exit(State nextState)
         {
@@ -42,7 +42,7 @@ public class StateMachine<Event> where Event : System.Enum
     /// <summary>
     /// どのステートからでも特定のステートへ遷移できるようにするための仮想ステート
     /// </summary>
-    public sealed class AnyState : State { }
+    public class AnyState : State { }
 
     /// <summary>
     /// 現在のステート
