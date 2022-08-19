@@ -17,7 +17,7 @@ MonoBehaviour:
   _interval: 2
   _initHP: 5
   _prefab: {fileID: 4833597805881504901, guid: f092b390f0318034fbbeaea3c29c9326, type: 3}
-  _initMoveTime: 5
+  _initMoveTime: 3
   _initCoolTime: 2
   _initCreateValue: 3
   _initLevelUpValue: 5
