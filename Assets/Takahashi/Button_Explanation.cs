@@ -4,16 +4,9 @@ using UnityEngine;
 
 public class Button_Explanation : MonoBehaviour
 {
-    [SerializeField, Header("操作方法キャンパス")] GameObject explanation = null;
-    GameObject window = null;
+    [SerializeField, Header("操作方法パネル")] GameObject explanation = null;
     public void OnClick()
     {
-        window = Instantiate(explanation);
-    }
-
-    public void DeleteWindow()
-    {
-        Destroy(window);
-        Debug.Log("関数よんだ");
+        explanation.SetActive(true);
     }
 }

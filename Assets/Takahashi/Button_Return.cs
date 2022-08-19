@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Button_Return : MonoBehaviour
 {
+    [SerializeField, Header("‘€ì•û–@ƒpƒlƒ‹")] GameObject explanation = null;
     public void OnClick()
     {
-        GameObject button_explanation = GameObject.Find("Button_Explanation");
-        button_explanation.GetComponent<Button_Explanation>().DeleteWindow();
-        Debug.Log("‚­‚è‚Á‚­‚µ‚½");
+        explanation.SetActive(false);
     }
 }
