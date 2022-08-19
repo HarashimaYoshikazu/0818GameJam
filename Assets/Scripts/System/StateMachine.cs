@@ -29,7 +29,7 @@ public class StateMachine<Event> where Event : System.Enum
             OnUpdate();
         }
 
-        protected virtual void OnUpdate() { }
+        public virtual void OnUpdate() { }
 
         public void Exit(State nextState)
         {

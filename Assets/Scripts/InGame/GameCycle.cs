@@ -18,18 +18,24 @@ public class GameCycle : MonoBehaviour
     {
         //ëJà⁄ÇÃê›íË
         _gameState.AddTransition<StartState, IngameState>(GameStateEvent.Start);
-        _gameState.AddTransition<IngameState,EndState >(GameStateEvent.Start);
+        _gameState.AddTransition<IngameState,EndState >(GameStateEvent.End);
         _gameState.StartSetUp<StartState>();
+    }
+    private void Update()
+    {
+        _gameState.Update();
+    }
+
+    public void StartEvent()
+    {
+        _gameState.Dispatch(GameStateEvent.Start);
     }
 
     class StartState : StateMachine<GameStateEvent>.State
     {
-        public override void OnEnter(StateMachine<GameStateEvent>.State prevState)
-        {
-            
-        }
 
-        protected override void OnUpdate()
+
+        public override void OnUpdate()
         {
             
         }
@@ -41,7 +47,17 @@ public class GameCycle : MonoBehaviour
     }
     class IngameState : StateMachine<GameStateEvent>.State
     {
+        public override void OnEnter(StateMachine<GameStateEvent>.State prevState)
+        {
+            UIManager.Instance.CreateVillanViewPanel();
+            GameManager.Instance.HeroGeneretorInstance.OnStart();
+        }
 
+        public override void OnUpdate()
+        {
+            GameManager.Instance.HeroGeneretorInstance.OnUpdate();
+            UIManager.Instance.OnUpdate();
+        }
     }
 
     class EndState : StateMachine<GameStateEvent>.State

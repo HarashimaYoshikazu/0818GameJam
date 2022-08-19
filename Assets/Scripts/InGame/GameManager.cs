@@ -38,4 +38,21 @@ public class GameManager : Singleton<GameManager>
             return _gameCycle;
         }
     }
+
+    HeroGeneretor _heroGeneretor = null;
+    public HeroGeneretor HeroGeneretorInstance
+    {
+        get
+        {
+            if (!_heroGeneretor)
+            {
+                _heroGeneretor = GameObject.FindObjectOfType<HeroGeneretor>();
+                if (!_heroGeneretor)
+                {
+                    _heroGeneretor = new GameObject("HeroGeneretor").AddComponent<HeroGeneretor>();
+                }
+            }
+            return _heroGeneretor;
+        }
+    }
 }
