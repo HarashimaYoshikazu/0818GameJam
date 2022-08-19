@@ -5,7 +5,6 @@ public class Button_Start : MonoBehaviour
 {
     public void OnClick()
     {
-        //SceneManager.LoadScene("MainScene");
-        Debug.Log("‚µ[‚ñØ‚è‘Ö‚¦");
+        SceneManager.LoadScene("Scene1");
     }
 }
