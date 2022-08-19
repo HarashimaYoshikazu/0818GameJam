@@ -30,11 +30,13 @@ public class GameCycle : MonoBehaviour
     {
         _gameState.Dispatch(GameStateEvent.Start);
     }
+    public void EndEvent()
+    {
+        _gameState.Dispatch(GameStateEvent.End);
+    }
 
     class StartState : StateMachine<GameStateEvent>.State
     {
-
-
         public override void OnUpdate()
         {
             
@@ -62,7 +64,11 @@ public class GameCycle : MonoBehaviour
 
     class EndState : StateMachine<GameStateEvent>.State
     {
-
+        public override void OnEnter(StateMachine<GameStateEvent>.State prevState)
+        {
+            GameObject go = Resources.Load<GameObject>("UIPrefabs/ResultCanvas");
+            GameObject.Instantiate(go);
+        }
     }
 
     class PauseState : StateMachine<GameStateEvent>.State

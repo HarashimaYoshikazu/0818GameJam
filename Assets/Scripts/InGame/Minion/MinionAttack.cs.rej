@@ -1,0 +1,10 @@
+diff a/Assets/Scripts/InGame/Minion/MinionAttack.cs b/Assets/Scripts/InGame/Minion/MinionAttack.cs	(rejected hunks)
+@@ -57,7 +57,7 @@
+ 
+         if (!isLeft)//��
+         {
+-            if (_cellArray[colom, row - 1].CurrentCellType == cellTypes)
++            if (_cellArray[colom, row - 1].CurrentCellType == cellTypes || _cellArray[colom, row - 1].CurrentCellType == CellTypes.Boss)
+             {
+                 if (_cellArray[colom, row - 1].MinionOnCell)
+                 {

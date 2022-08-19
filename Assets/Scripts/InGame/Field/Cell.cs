@@ -78,6 +78,10 @@ public class Cell : MonoBehaviour
             case CellTypes.AlreadyHero:
                 //_image.sprite
                 break;
+            case CellTypes.Boss:
+                _image.sprite= _dart;
+                _image.color = Color.black;
+                break;
         }
 
     }
@@ -89,6 +93,7 @@ public enum CellTypes
     SpawonPoint,
     Block,
     HeroArea,
-    AlreadyHero
+    AlreadyHero,
+    Boss
 }
 
