@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class UIManager:Singleton<UIManager>
 {
@@ -30,4 +31,18 @@ public class UIManager:Singleton<UIManager>
     {
         _villanVIews.ForEach(x => x.OnUpdate());
     }
+
+    Text _moneyText = null;
+    Canvas _canvas = null;
+    public void ChangeMoneyView(int value)
+    {
+        if (!_moneyText)
+        {
+            _canvas = GameObject.Instantiate(Resources.Load<Canvas>("UIPrefabs/Canvas"));
+            _moneyText = GameObject.Instantiate(Resources.Load<Text>("UIPrefabs/MoneyText"),_canvas.transform);
+        }
+        _moneyText.text = value.ToString();        
+    }
+    Slider _bossHPSlider = null;
+    Text _timeText = null;
 }
