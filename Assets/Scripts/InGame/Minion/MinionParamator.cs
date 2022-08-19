@@ -91,6 +91,8 @@ public class MinionParamator : MonoBehaviour
         get { return _interval; }
         set { _interval = Mathf.Clamp(_interval + value, 0, _interval + value); }
     }
+    [SerializeField]
+    int _addMoney = 100;
 
     void Death()
     {
@@ -100,6 +102,7 @@ public class MinionParamator : MonoBehaviour
             GameManager.Instance.CellManagerInstans.CellArray[CurrentPos.Value.x, CurrentPos.Value.y].CurrentCellType = CellTypes.HeroArea;
             GameManager.Instance.HeroGeneretorInstance.AddSpawnCell(GameManager.Instance.CellManagerInstans.CellArray[CurrentPos.Value.x, CurrentPos.Value.y]);
             GameManager.Instance.HeroGeneretorInstance.RemoveHero(this.gameObject);
+            GameManager.Instance.ChangeMoney(_addMoney);
         }
         else if (_minionType == MinionType.Villan)
         {
