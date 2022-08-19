@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37a5dc1bc5dec7a4bae594793cf37a3d, type: 3}
+  m_Name: Villan2
+  m_EditorClassIdentifier: 
+  _minionType: 1
+  _initAtk: 4
+  _interval: 3
+  _initHP: 3
+  _prefab: {fileID: 4833597805881504901, guid: f092b390f0318034fbbeaea3c29c9326, type: 3}
+  _initMoveTime: 5
+  _initCoolTime: 2
+  _initCreateValue: 3
+  _initLevelUpValue: 5
+  _sprite: {fileID: 21300000, guid: 63d4914880a83944c981488884ff81f5, type: 3}
