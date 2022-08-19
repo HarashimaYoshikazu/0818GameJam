@@ -49,7 +49,7 @@ public class UIManager:Singleton<UIManager>
         _bossHPSlider.value = GameManager.Instance.CellManagerInstans.BossHP;
         if (GameManager.Instance.CellManagerInstans.BossHP<=0)
         {
-            GameManager.Instance.GameCycleInstans.EndEvent();
+            GameManager.Instance.GameCycleInstans.ClearEvent();
         }
     }
 

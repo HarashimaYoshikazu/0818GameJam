@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Harashima/Scene1.unity
     guid: cde82b3d440498543bd31e27052b5307
+  - enabled: 1
+    path: Assets/Harashima/Scene2.unity
+    guid: 70a97c6f2392ac249b3a279dc6e6301f
   m_configObjects: {}

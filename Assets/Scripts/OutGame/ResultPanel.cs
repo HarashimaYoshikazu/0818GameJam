@@ -7,18 +7,24 @@ using UnityEngine.SceneManagement;
 public class ResultPanel : MonoBehaviour
 {
     [SerializeField]
-    Button _againButton;
+    Button _sceneOneButton;
     [SerializeField]
     Button _titleButton;
+    [SerializeField]
+    Button _sceneTwoButton;
     private void Awake()
     {
-        _againButton.onClick.AddListener(() => 
+        _sceneOneButton.onClick.AddListener(() => 
         {
-            SceneManager.LoadScene("HarashimaScene");
+            SceneManager.LoadScene("Scene1");
+        });
+        _sceneTwoButton.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene("Scene2");
         });
         _titleButton.onClick.AddListener(() => 
         {
-            SceneManager.LoadScene("");
+            SceneManager.LoadScene("Title");
         });
     }
 }

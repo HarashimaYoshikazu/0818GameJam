@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(MinionParamator))]
 public class MinionAttack : MonoBehaviour
 {
+    [SerializeField]
+    AudioClip _clip;
     MinionParamator _minionParamator = null;
     int _columCount = 0;
     int _rowCount = 0;
@@ -31,6 +33,7 @@ public class MinionAttack : MonoBehaviour
     }
     public void Attack(MinionParamator minion)
     {
+        GameManager.Instance.SoundManager.ClipPlay(_clip);
         minion.Damage(_minionParamator.Atk);
         Debug.Log($"{this.gameObject.name}ÇÃçUåÇ{_minionParamator.Atk}");
         _timer = 0f;
