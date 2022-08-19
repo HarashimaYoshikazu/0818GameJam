@@ -57,7 +57,7 @@ public class MinionAttack : MonoBehaviour
 
         if (!isLeft)//ç∂
         {
-            if (_cellArray[colom, row - 1].CurrentCellType == cellTypes)
+            if (_cellArray[colom, row - 1].CurrentCellType == cellTypes || _cellArray[colom, row - 1].CurrentCellType ==CellTypes.Boss)
             {
                 if (_cellArray[colom, row - 1].MinionOnCell)
                 {
@@ -70,7 +70,7 @@ public class MinionAttack : MonoBehaviour
         }
         if (!isRight)
         {
-            if (_cellArray[colom, row + 1].CurrentCellType == cellTypes)
+            if (_cellArray[colom, row + 1].CurrentCellType == cellTypes|| _cellArray[colom, row + 1].CurrentCellType == CellTypes.Boss)
             {
                 if (_cellArray[colom, row + 1].MinionOnCell)
                 {
@@ -83,7 +83,7 @@ public class MinionAttack : MonoBehaviour
         }
         if (!isTop)
         {
-            if (_cellArray[colom - 1, row].CurrentCellType == cellTypes)
+            if (_cellArray[colom - 1, row].CurrentCellType == cellTypes|| _cellArray[colom - 1, row].CurrentCellType == CellTypes.Boss)
             {
                 if (_cellArray[colom - 1, row].MinionOnCell)
                 {
@@ -95,7 +95,7 @@ public class MinionAttack : MonoBehaviour
         }
         if (!isBottom)
         {
-            if (_cellArray[colom + 1, row].CurrentCellType == cellTypes)
+            if (_cellArray[colom + 1, row].CurrentCellType == cellTypes|| _cellArray[colom + 1, row].CurrentCellType == CellTypes.Boss)
             {
                 if (_cellArray[colom + 1, row].MinionOnCell)
                 {

@@ -35,6 +35,7 @@ public class UIManager:Singleton<UIManager>
         if (!_bossHPSlider)
         {
             _bossHPSlider = GameObject.Instantiate(Resources.Load<Slider>("UIPrefabs/Slider"),_canvas.transform);
+            _bossHPSlider.maxValue = GameManager.Instance.CellManagerInstans.BossHP;
         }
         if (!_timeText)
         {
@@ -45,6 +46,11 @@ public class UIManager:Singleton<UIManager>
     public void OnUpdate()
     {
         _villanVIews.ForEach(x => x.OnUpdate());
+        _bossHPSlider.value = GameManager.Instance.CellManagerInstans.BossHP;
+        if (GameManager.Instance.CellManagerInstans.BossHP<=0)
+        {
+            GameManager.Instance.GameCycleInstans.EndEvent();
+        }
     }
 
     Text _moneyText = null;

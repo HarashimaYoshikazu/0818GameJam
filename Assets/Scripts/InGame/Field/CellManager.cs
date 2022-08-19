@@ -34,7 +34,7 @@ public class CellManager : MonoBehaviour
         {
             _cellPrefab = Resources.Load<Cell>("Cell");
         }
-
+        //FIXME ネストふか！
         if (_cellArray == null)
         {
             _cellArray = new Cell[_colm, _row];
@@ -46,7 +46,12 @@ public class CellManager : MonoBehaviour
                     if (cel)
                     {
                         _cellArray[i, k] = cel.GetComponent<Cell>();
-                    }               
+                        if (_cellArray[i, k].CurrentCellType ==CellTypes.Boss)
+                        {
+                            //ボス関数に引数を代入
+                            CreateBoss(_cellArray[i, k]);
+                        }
+                    }
                 }
             }
         }
@@ -65,6 +70,16 @@ public class CellManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    MinionParamator _boss;
+    public int BossHP => _boss.HP;
+    void CreateBoss(Cell bossCell)
+    {
+        var red = Resources.Load<GameObject>("Red");
+        var go = Instantiate(red,bossCell.transform);
+        _boss = go.GetComponent<MinionParamator>();
+        bossCell.MinionOnCell = _boss;
     }
     
 }

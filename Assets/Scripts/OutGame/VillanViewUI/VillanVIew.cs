@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Image))]
-public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,IDragHandler,IPointerDownHandler
+public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler, IDragHandler, IPointerDownHandler
 {
     [SerializeField]
     int _id = 1;
@@ -69,7 +69,7 @@ public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,ID
             _image.color = Color.white;
         }
 
-        if (_levelUpValue>GameManager.Instance.Money)
+        if (_levelUpValue > GameManager.Instance.Money)
         {
             _panelOnButton.SetActive(true);
         }
@@ -94,12 +94,12 @@ public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,ID
         _prefab = data.Prefab;
 
         _button.onClick.AddListener(() => { LevelUp(); });
-        _panelOnButton = Instantiate(Resources.Load<GameObject>("UIPrefabs/PanelOnButton"),_button.transform);
+        _panelOnButton = Instantiate(Resources.Load<GameObject>("UIPrefabs/PanelOnButton"), _button.transform);
     }
 
     public void LevelUp()
     {
-        if (_levelUpValue<GameManager.Instance.Money)
+        if (_levelUpValue < GameManager.Instance.Money)
         {
             GameManager.Instance.ChangeMoney(-(_levelUpValue));
             _initAtk += _atkLevelUpValue;
@@ -113,7 +113,7 @@ public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,ID
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (_coolTime>_timer)
+        if (_coolTime > _timer)
         {
             return;
         }
@@ -139,33 +139,31 @@ public class VillanVIew : MonoBehaviour, IBeginDragHandler, IPointerUpHandler,ID
         {
             return;
         }
-        if (_currentPointerObject&&_currentPointerObject.TryGetComponent<Cell>(out Cell cell))
+        if (_currentPointerObject && _currentPointerObject.TryGetComponent<Cell>(out Cell cell))
         {
-            if (cell.CurrentCellType ==CellTypes.SpawonPoint)
+            if (cell.CurrentCellType == CellTypes.SpawonPoint)
             {
-                for (int i = 0;i<_createValue;i++)
-                {
-                    //¶¬
-                    var minion = Instantiate(_prefab, _currentPointerObject.transform);
-                    minion.HP = _initHP;
-                    minion.Atk = _initAtk;
-                    minion.MoveTime = _initMoveTime;
-                    minion.StartPos = cell.CellPos;
-                    minion.Interval = _interval;
-                    minion.MinionType = MinionType.Villan;
-                    minion.ID = _id;
-                    _villanList.Add(minion.gameObject);
-                }
+                //¶¬
+                var minion = Instantiate(_prefab, _currentPointerObject.transform);
+                minion.HP = _initHP;
+                minion.Atk = _initAtk;
+                minion.MoveTime = _initMoveTime;
+                minion.StartPos = cell.CellPos;
+                minion.Interval = _interval;
+                minion.MinionType = MinionType.Villan;
+                minion.ID = _id;
+                _villanList.Add(minion.gameObject);
+
             }
         }
         _image.raycastTarget = true;
         _button.gameObject.SetActive(true);
         _timer = 0f;
-        this.transform.SetParent(UIManager.Instance.UIVillanSelectPanel.transform);              
+        this.transform.SetParent(UIManager.Instance.UIVillanSelectPanel.transform);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        
+
     }
 }
