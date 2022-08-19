@@ -64,4 +64,22 @@ public class GameManager : Singleton<GameManager>
         _money += value;
         UIManager.Instance.ChangeMoneyView(_money);
     }
+
+    SoundManager _soundManager = null;
+    public SoundManager SoundManager
+    {
+        get
+        {
+            if (!_soundManager)
+            {
+                _soundManager = GameObject.FindObjectOfType<SoundManager>();
+                if (!_soundManager)
+                {
+                    _soundManager = new GameObject("SoundManager").AddComponent<SoundManager>();
+                }
+            }
+            return _soundManager;
+        }
+
+    }
 }

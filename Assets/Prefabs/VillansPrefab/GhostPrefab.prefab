@@ -96,6 +96,7 @@ MonoBehaviour:
   _hP: 0
   _moveTime: 0
   _interval: 0
+  _addMoney: 100
 --- !u!114 &-525217468493916612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,3 +121,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f84eeb947715b447be91e184147ffe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _clip: {fileID: 8300000, guid: 5a373535c87e64a44ac1401fb1d1eb44, type: 3}
