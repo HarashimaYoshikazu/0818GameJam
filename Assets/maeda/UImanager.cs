@@ -16,7 +16,7 @@ public class UImanager : MonoBehaviour
     void Start()
     {
         _elapsed = 300;
-        _life = 25;
+        _life = 40;
         _funds = 100;
 
         hp_bar.maxValue = _life;
@@ -29,7 +29,7 @@ public class UImanager : MonoBehaviour
         TimeUI();
         LifeUI();
         FundsUI();
-        if (Input.GetKeyUp(KeyCode.Z))
+        if (Input.GetKeyUp(KeyCode.Z))//動作チェック用
         {
             _life -= 2;
         }
